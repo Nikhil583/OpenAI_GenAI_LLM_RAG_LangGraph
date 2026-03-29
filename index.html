@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="Professional portfolio showcasing skills, experience, education and a recruiter-ready contact form. Mobile-first, responsive, single-file." />
+<title>Professional Portfolio — Nikhil</title>
+
+<style>
+    /* Palette & spacing (CSS custom properties) */
+    :root{
+        --bg:#071026; /* deep navy */
+        --panel:#0b1a2b;
+        --muted:#9fb8d6;
+        --accent:#3aa0ff;
+        --accent-2:#6bd3ff;
+        --glass: rgba(255,255,255,0.04);
+        --white:#eef6ff;
+        --success:#7ee787;
+        --gap:1rem;
+        --max-width:1100px;
+        --radius:12px;
+        --fw-semi:600;
+        --fw-regular:400;
+        --shadow: 0 6px 20px rgba(5,10,20,0.6);
+    }
+
+    /* Basic resets & typography */
+    html,body{height:100%;background:var(--bg);color:var(--white);font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;line-height:1.4;scroll-behavior:smooth;}
+    *{box-sizing:border-box}
+    main{max-width:var(--max-width);margin:0 auto;padding:6.25rem 1rem 4rem}
+    h1,h2,h3{margin:0 0 .5rem}
+    a{color:var(--accent)}
+    button{font:inherit}
+
+    /* Header / nav */
+    header{position:fixed;left:0;right:0;top:0;z-index:40;background:linear-gradient(180deg,rgba(7,16,38,0.9),rgba(7,16,38,0.75));backdrop-filter: blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    .nav-wrap{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem}
+    .brand{display:flex;gap:.6rem;align-items:center}
+    .brand .logo{width:42px;height:42px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--bg)}
+    nav ul{display:flex;gap:1rem;list-style:none;margin:0;padding:0}
+    nav a{padding:.45rem .6rem;border-radius:8px;color:var(--muted);text-decoration:none;font-weight:500}
+    nav a:hover,nav a:focus{color:var(--white);background:rgba(255,255,255,0.03);outline:none}
+    /* hamburger for small screens */
+    .hamburger{display:none;background:transparent;border:0;color:var(--muted);width:44px;height:44px;border-radius:8px}
+    .hamburger:focus{outline:2px solid rgba(58,160,255,0.25)}
+    /* Mobile nav panel */
+    .mobile-menu{display:none;position:absolute;left:1rem;right:1rem;top:64px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:.75rem;border-radius:10px;box-shadow:var(--shadow)}
+    .mobile-menu a{display:block;padding:.6rem .75rem;border-radius:8px;color:var(--muted);text-decoration:none}
+    .mobile-menu a:hover{background:rgba(255,255,255,0.02);color:var(--white)}
+
+    /* Sections */
+    section{padding:2.25rem 0;border-radius:var(--radius)}
+    .split{display:grid;grid-template-columns:1fr;gap:1.2rem;align-items:center}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:1rem;border-radius:12px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.03)}
+
+    /* Skills */
+    .skills-grid{display:flex;flex-wrap:wrap;gap:.6rem}
+    .skill{padding:.45rem .6rem;border-radius:999px;background:linear-gradient(90deg,rgba(58,160,255,0.12),rgba(107,211,255,0.06));border:1px solid rgba(58,160,255,0.08);color:var(--muted);font-weight:600}
+
+    /* Timeline */
+    .timeline{display:flex;flex-direction:column;gap:1rem}
+    .job{display:grid;grid-template-columns:110px 1fr;gap:1rem;padding:.85rem;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(255,255,255,0.02)}
+    .job h4{margin:0;font-weight:700}
+    .date{color:var(--muted);font-size:.9rem}
+
+    /* Contact / two-column layout */
+    .contact-grid{display:grid;grid-template-columns:1fr;gap:1rem;align-items:stretch}
+    form{display:grid;gap:.8rem}
+    .row{display:grid;gap:.6rem}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    input,textarea,select{width:100%;padding:.6rem;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--white)}
+    input:focus,textarea:focus,select:focus{outline:2px solid rgba(58,160,255,0.18);border-color:rgba(58,160,255,0.25)}
+    .form-visual{display:flex;align-items:center;justify-content:center;border-radius:12px;min-height:240px;color:var(--bg);font-weight:700}
+
+    /* Footer */
+    footer{padding:1.25rem 0;color:var(--muted);text-align:center;border-top:1px solid rgba(255,255,255,0.02);margin-top:2rem}
+
+    /* Responsive breakpoints (mobile-first) */
+    @media(min-width:480px){
+        main{padding-top:6.75rem}
+        .split{grid-template-columns:1fr 360px}
+        .contact-grid{grid-template-columns:1fr 360px}
+    }
+    @media(min-width:768px){
+        .nav-wrap{padding:1rem}
+        nav ul{gap:1.1rem}
+        .hamburger{display:none}
+        .brand .name{font-size:1.1rem}
+        .mobile-menu{display:none}
+    }
+    @media(min-width:1024px){
+        .split{grid-template-columns:1fr 420px}
+        .contact-grid{grid-template-columns:1fr 420px}
+        nav ul{gap:1.2rem}
+    }
+
+    /* Show hamburger on small viewports */
+    @media(max-width:767px){
+        nav ul{display:none}
+        .hamburger{display:inline-flex;align-items:center;justify-content:center}
+    }
+
+    /* subtle transitions and focus */
+    .card, .job, .skill, button{transition:all .22s ease}
+    button.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:var(--bg);border:0;padding:.7rem 1rem;border-radius:10px;cursor:pointer}
+    button.primary:focus{box-shadow:0 6px 18px rgba(58,160,255,0.12)}
+    /* small helper */
+    .muted{color:var(--muted);font-size:.95rem}
+</style>
+</head>
+<body>
+<header role="banner" aria-label="Main header">
+    <div class="nav-wrap" style="padding-left:1rem;padding-right:1rem">
+        <div class="brand" aria-hidden="false">
+            <div class="logo" style="box-shadow: 0 6px 18px rgba(58,160,255,0.12)">NK</div>
+            <div>
+                <div class="name" style="font-weight:700;color:var(--white)">Nikhil Kumar</div>
+                <div style="font-size:.8rem;color:var(--muted)">Full-stack Engineer • Open to opportunities</div>
+            </div>
+        </div>
+
+        <nav role="navigation" aria-label="Primary navigation">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+
+        <button class="hamburger" id="menuToggle" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu" style="border:1px solid rgba(255,255,255,0.03);background:transparent">
+            <!-- simple 3-line icon -->
+            <svg width="20" height="14" viewBox="0 0 20 14" fill="none" aria-hidden="true"><rect width="20" height="2" rx="1" fill="currentColor"></rect><rect y="6" width="20" height="2" rx="1" fill="currentColor"></rect><rect y="12" width="20" height="2" rx="1" fill="currentColor"></rect></svg>
+        </button>
+    </div>
+
+    <div id="mobileMenu" class="mobile-menu" role="menu" aria-hidden="true" style="display:none">
+        <a href="#about" role="menuitem">About</a>
+        <a href="#skills" role="menuitem">Skills</a>
+        <a href="#experience" role="menuitem">Experience</a>
+        <a href="#education" role="menuitem">Education</a>
+        <a href="#contact" role="menuitem">Contact</a>
+    </div>
+</header>
+
+<main role="main" aria-label="Main content area">
+    <!-- ABOUT -->
+    <section id="about" style="padding-top:1rem">
+        <div class="split" style="gap:1.25rem">
+            <div class="card" style="padding:1.1rem">
+                <h1 style="font-size:1.6rem">Full-stack Engineer focused on scalable web platforms</h1>
+                <p class="muted" style="margin-top:.6rem">I design and build customer-facing applications and internal tools. 8+ years building reliable front-end experiences, APIs, and cloud automation. Located in Bangalore — open to remote and hybrid roles. Available immediately.</p>
+
+                <ul style="margin-top:1rem;color:var(--muted);list-style:disc;padding-left:1.1rem">
+                    <li>Led front-end rewrites that improved performance by 45%.</li>
+                    <li>Built observability pipelines and CI automations for distributed teams.</li>
+                </ul>
+
+                <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap">
+                    <a href="#contact" class="primary" style="text-decoration:none;padding:.6rem .9rem;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:var(--bg);font-weight:700">Contact Recruiter-ready CV</a>
+                    <a href="#experience" style="padding:.55rem .8rem;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--muted)">View Experience</a>
+                </div>
+            </div>
+
+            <!-- Robot illustration card -->
+            <aside class="card" style="display:flex;align-items:center;justify-content:center;position:relative;overflow:visible">
+                <!-- Lightweight inline SVG robot with simple pupils that follow cursor -->
+                <div id="robotWrap" style="width:100%;max-width:360px;display:flex;justify-content:center;align-items:center;position:relative;padding:0.5rem">
+                    <!-- SVG -->
+                    <svg id="robot" viewBox="0 0 360 280" width="100%" height="100%" role="img" aria-label="Illustration of a robot working on laptop" style="max-width:360px">
+                        <defs>
+                            <linearGradient id="screenGrad" x1="0" x2="1">
+                                <stop offset="0" stop-color="#0b2b43"/>
+                                <stop offset="1" stop-color="#064a74"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- body / chair -->
+                        <g transform="translate(40,10)">
+                            <rect x="110" y="130" width="120" height="90" rx="18" fill="#0f2230" />
+                            <rect x="40" y="200" width="260" height="18" rx="9" fill="#071426" opacity="0.6"/>
+                            <!-- laptop -->
+                            <g id="laptop" transform="translate(80,68)">
+                                <rect x="36" y="54" width="170" height="2" fill="#001a2b" />
+                                <rect x="8" y="0" width="250" height="140" rx="10" fill="#0b1220" />
+                                <rect x="24" y="8" width="202" height="96" rx="6" fill="url(#screenGrad)" />
+                                <!-- cursor on screen (animated) -->
+                                <g id="cursor" transform="translate(90,40)">
+                                    <path d="M0,0 L12,7 L6,9 L8,6 Z" fill="#fff" opacity="0.95" style="transform-origin:6px 4px"></path>
+                                </g>
+                            </g>
+
+                            <!-- robot head -->
+                            <g id="head" transform="translate(80,0)">
+                                <rect x="54" y="0" width="110" height="94" rx="18" fill="#123041" stroke="rgba(255,255,255,0.03)"/>
+                                <!-- eyes background -->
+                                <ellipse cx="110" cy="42" rx="66" ry="28" fill="#071a28" opacity="0.85"/>
+                                <!-- left eye socket -->
+                                <g id="left-eye" transform="translate(70,28)">
+                                    <circle cx="0" cy="0" r="16" fill="#e6f6ff"/>
+                                    <circle id="pupilL" cx="0" cy="0" r="7" fill="#042036"/>
+                                </g>
+                                <!-- right eye socket -->
+                                <g id="right-eye" transform="translate(150,28)">
+                                    <circle cx="0" cy="0" r="16" fill="#e6f6ff"/>
+                                    <circle id="pupilR" cx="0" cy="0" r="7" fill="#042036"/>
+                                </g>
+
+                                <!-- subtle mouth -->
+                                <rect x="110" y="70" width="32" height="6" rx="3" fill="#051623" opacity="0.9"/>
+                            </g>
+
+                            <!-- arms -->
+                            <g transform="translate(40,110)">
+                                <rect x="0" y="0" width="36" height="16" rx="8" fill="#0e2a3a" />
+                                <rect x="200" y="0" width="36" height="16" rx="8" fill="#0e2a3a" />
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <div class="card" style="padding:1rem">
+            <h2 style="font-size:1.25rem">Skills</h2>
+            <p class="muted" style="margin-bottom:.8rem">Technical and interpersonal strengths that translate to impact.</p>
+
+            <div style="display:flex;gap:1.2rem;flex-wrap:wrap">
+                <div style="flex:1;min-width:200px">
+                    <h3 style="font-size:1rem;margin-bottom:.6rem">Technical</h3>
+                    <div class="skills-grid" aria-label="Technical skills">
+                        <span class="skill">JavaScript</span>
+                        <span class="skill">TypeScript</span>
+                        <span class="skill">React</span>
+                        <span class="skill">Node.js</span>
+                        <span class="skill">GraphQL</span>
+                        <span class="skill">Kubernetes</span>
+                        <span class="skill">CI/CD</span>
+                        <span class="skill">AWS</span>
+                    </div>
+                </div>
+
+                <div style="flex:1;min-width:200px">
+                    <h3 style="font-size:1rem;margin-bottom:.6rem">Soft Skills</h3>
+                    <div class="skills-grid" aria-label="Soft skills">
+                        <span class="skill">Mentoring</span>
+                        <span class="skill">Cross-team collaboration</span>
+                        <span class="skill">Product thinking</span>
+                        <span class="skill">Observability</span>
+                        <span class="skill">System design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+        <div class="card">
+            <h2 style="font-size:1.25rem">Experience</h2>
+            <div class="timeline" style="margin-top:1rem">
+                <article class="job" aria-labelledby="job1">
+                    <div class="date" style="text-align:right">2021 — Present</div>
+                    <div>
+                        <h4 id="job1">Lead Front-end Engineer — Acme Tech</h4>
+                        <div class="muted">Improved product performance and delivery cadence</div>
+                        <ul style="margin-top:.5rem;color:var(--muted);padding-left:1rem">
+                            <li>Redesigned front-end architecture; reduced bundle size by 40%.</li>
+                            <li>Introduced component library and migration plan adopted company-wide.</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="job" aria-labelledby="job2">
+                    <div class="date" style="text-align:right">2017 — 2021</div>
+                    <div>
+                        <h4 id="job2">Full-stack Engineer — ByteWorks</h4>
+                        <div class="muted">Built customer-facing dashboards and backend services</div>
+                        <ul style="margin-top:.5rem;color:var(--muted);padding-left:1rem">
+                            <li>Delivered analytics dashboards used by 50k+ customers.</li>
+                            <li>Automated deployments and reduced failed deploys by 60%.</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education">
+        <div class="card">
+            <h2 style="font-size:1.25rem">Education & Certifications</h2>
+            <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:.8rem">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <strong>B.Tech, Computer Science</strong><div class="muted">National Institute of Technology — 2013‑2017</div>
+                    </div>
+                    <div class="muted">CGPA: 9.1</div>
+                </div>
+
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                    <div>
+                        <strong>Cert: Cloud Practitioner</strong><div class="muted">AWS — 2020</div>
+                    </div>
+                    <div class="muted">Credential</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-labelledby="contactHeading">
+        <h2 id="contactHeading" style="margin-bottom:.6rem">Contact</h2>
+        <div class="contact-grid" style="gap:1rem">
+            <!-- Form column (left on desktop) -->
+            <div class="card" style="padding:1rem">
+                <form id="contactForm" action="/send" method="POST" aria-label="Contact form" onsubmit="return handleMailto(event)">
+                    <div style="display:flex;gap:.6rem;margin-bottom:.6rem">
+                        <div style="flex:1" class="row">
+                            <label for="name" style="font-size:.85rem;margin-bottom:.2rem;display:block">Name</label>
+                            <input id="name" name="name" type="text" placeholder="Your full name" required style="background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(58,160,255,0.06);padding:.6rem;border-radius:10px" />
+                        </div>
+                        <div style="flex:1" class="row">
+                            <label for="email" style="font-size:.85rem;margin-bottom:.2rem;display:block">Email</label>
+                            <input id="email" name="email" type="email" placeholder="you@company.com" required style="background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px solid rgba(107,211,255,0.05);padding:.6rem;border-radius:10px" />
+                        </div>
+                    </div>
+
+                    <div style="display:flex;gap:.6rem;margin-bottom:.6rem" class="two-col">
+                        <div style="grid-column:1" class="row">
+                            <label for="company" style="font-size:.85rem;margin-bottom:.2rem;display:block">Company</label>
+                            <input id="company" name="company" type="text" placeholder="Organization (optional)" style="background:linear-gradient(90deg,rgba(10,20,34,0.12),rgba(6,36,60,0.06));border:1px solid rgba(255,255,255,0.02);padding:.6rem;border-radius:10px" />
+                        </div>
+                        <div style="grid-column:2" class="row">
+                            <label for="subject" style="font-size:.85rem;margin-bottom:.2rem;display:block">Subject</label>
+                            <input id="subject" name="subject" type="text" placeholder="e.g., Senior Front-end Role" required style="background:linear-gradient(90deg,rgba(6,36,60,0.06),rgba(10,20,34,0.12));border:1px solid rgba(58,160,255,0.04);padding:.6rem;border-radius:10px" />
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom:.6rem" class="row">
+                        <label for="message" style="font-size:.85rem;margin-bottom:.2rem;display:block">Message</label>
+                        <textarea id="message" name="message" rows="6" placeholder="Brief message or role details..." required style="background:linear-gradient(180deg,rgba(255,255,255,0.01),transparent);border:1px dashed rgba(58,160,255,0.04);padding:.6rem;border-radius:10px"></textarea>
+                    </div>
+
+                    <div style="display:flex;gap:.6rem;align-items:center;justify-content:flex-start">
+                        <button type="submit" class="primary" style="padding:.65rem 1rem;border-radius:10px">Send (mailto)</button>
+                        <div style="color:var(--muted);font-size:.9rem">Form prepared for server: <span style="font-family:monospace;background:rgba(255,255,255,0.02);padding:.15rem .4rem;border-radius:6px">action="/send" method="POST"</span></div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Visual column (right) -->
+            <div class="form-visual card" style="background:linear-gradient(135deg,#05283f,#083a57);min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                <!-- decorative SVG / gradient -->
+                <svg width="220" height="140" viewBox="0 0 220 140" aria-hidden="true" style="margin-bottom:.6rem">
+                    <defs>
+                        <linearGradient id="vgrad" x1="0" x2="1">
+                            <stop offset="0" stop-color="#6bd3ff"/>
+                            <stop offset="1" stop-color="#3aa0ff"/>
+                        </linearGradient>
+                    </defs>
+                    <rect rx="18" width="220" height="140" fill="url(#vgrad)" opacity="0.08"></rect>
+                    <g transform="translate(12,16)" fill="#eaf8ff" opacity="0.9">
+                        <rect x="0" y="0" width="80" height="12" rx="6"></rect>
+                        <rect x="0" y="22" width="140" height="10" rx="5"></rect>
+                        <rect x="0" y="44" width="220" height="10" rx="5"></rect>
+                    </g>
+                </svg>
+                <div style="color:var(--white);text-align:center;max-width:260px">
+                    <strong style="display:block">Recruiter-ready contact</strong>
+                    <div class="muted" style="font-size:.95rem;margin-top:.4rem">Use this form to open a prefilled email in your mail client. Server integration ready through action/method attributes.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer role="contentinfo">
+        <div style="display:flex;justify-content:center;gap:1rem;align-items:center;flex-wrap:wrap">
+            <div style="font-size:.95rem">© <span id="year"></span> Nikhil Kumar</div>
+            <div style="color:var(--muted)">•</div>
+            <div style="display:flex;gap:.6rem">
+                <a href="#" style="color:var(--muted);text-decoration:none">Privacy</a>
+                <a href="#" style="color:var(--muted);text-decoration:none">LinkedIn</a>
+                <a href="#" style="color:var(--muted);text-decoration:none">GitHub</a>
+            </div>
+        </div>
+    </footer>
+</main>
+
+<!-- Minimal JS for interactions: hamburger, mobile nav, robot eyes follow cursor, mailto handling -->
+<script>
+    // Header mobile toggle
+    (function(){
+        const btn = document.getElementById('menuToggle');
+        const menu = document.getElementById('mobileMenu');
+        btn.addEventListener('click', () => {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', String(!expanded));
+            if(menu.style.display === 'none' || menu.style.display === ''){ menu.style.display='block'; menu.setAttribute('aria-hidden','false'); }
+            else { menu.style.display='none'; menu.setAttribute('aria-hidden','true'); }
+        });
+        // close menu when link clicked
+        menu.addEventListener('click', (e)=>{ if(e.target.tagName==='A'){ menu.style.display='none'; btn.setAttribute('aria-expanded','false'); } })
+    })();
+
+    // Mailto handler: builds mailto and opens default mail client
+    function handleMailto(e){
+        e.preventDefault();
+        const form = e.target;
+        const name = encodeURIComponent(form.name.value || '');
+        const email = encodeURIComponent(form.email.value || '');
+        const company = encodeURIComponent(form.company.value || '');
+        const subject = encodeURIComponent(form.subject.value || 'Contact from Portfolio');
+        const message = encodeURIComponent((form.message.value || '') + "\n\n---\nName: " + (form.name.value || '') + "\nEmail: " + (form.email.value || '') + (company? ("\nCompany: "+form.company.value):""));
+        // prefill To: left blank for recruiter to fill or can set default
+        const to = ""; // e.g., "recruiter@example.com"
+        const mailto = `mailto:${to}?subject=${subject}&body=${message}&cc=${email}`;
+        window.location.href = mailto;
+        return false;
+    }
+
+    // Robot eyes follow cursor — lightweight math
+    (function(){
+        const svg = document.getElementById('robot');
+        const pupilL = document.getElementById('pupilL');
+        const pupilR = document.getElementById('pupilR');
+        const wrap = document.getElementById('robotWrap');
+
+        // map page coords to small pupil displacement
+        document.addEventListener('mousemove', (ev) => {
+            const rect = wrap.getBoundingClientRect();
+            const cx = rect.left + rect.width/2;
+            const cy = rect.top + rect.height/2;
+            const dx = (ev.clientX - cx) / rect.width;
+            const dy = (ev.clientY - cy) / rect.height;
+            const max = 4; // max pixel displacement
+            const x = Math.max(-1,Math.min(1,dx))*max;
+            const y = Math.max(-1,Math.min(1,dy))*max;
+            pupilL.setAttribute('cx', String(x));
+            pupilL.setAttribute('cy', String(y));
+            pupilR.setAttribute('cx', String(x));
+            pupilR.setAttribute('cy', String(y));
+        });
+
+        // small gentle idle animation
+        let t = 0;
+        setInterval(()=> {
+            t += 0.05;
+            const idleX = Math.sin(t) * 0.6;
+            const idleY = Math.cos(t*1.2) * 0.6;
+            // only apply if mouse isn't moving — merged with last position slightly
+            if(!window.__mousePaused){
+                // no-op
+            }
+            // apply tiny idle jitter by nudging current cx/cy
+            [pupilL,pupilR].forEach(p => {
+                const cx = parseFloat(p.getAttribute('cx')||0) + idleX*0.2;
+                const cy = parseFloat(p.getAttribute('cy')||0) + idleY*0.2;
+                p.setAttribute('cx', String(cx));
+                p.setAttribute('cy', String(cy));
+            });
+        }, 90);
+    })();
+
+    // set year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
