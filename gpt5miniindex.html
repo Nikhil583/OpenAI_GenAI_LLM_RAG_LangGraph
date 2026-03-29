@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Professional Portfolio</title>
+    <meta name="description" content="Professional portfolio showcasing skills, experience, education and contact form." />
+    <style>
+        :root{
+            --bg:#0b1220;
+            --panel:#0f1724;
+            --muted:#9aa7bb;
+            --accent:#2f9cff;
+            --glass: rgba(255,255,255,0.03);
+            --card: rgba(255,255,255,0.02);
+            --radius:12px;
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+            margin:0;
+            font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background:linear-gradient(180deg,#07101a 0%,var(--bg) 100%);
+            color:#e6eef8;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            scroll-behavior:smooth;
+            line-height:1.45;
+            padding-top:72px; /* header height */
+        }
+
+        /* Header / Nav */
+        header{
+            position:fixed;
+            top:0; left:0; right:0;
+            height:72px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:0 20px;
+            background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+            border-bottom:1px solid rgba(255,255,255,0.03);
+            backdrop-filter: blur(6px);
+            z-index:1000;
+        }
+        .brand{
+            display:flex;
+            gap:12px;
+            align-items:center;
+            font-weight:600;
+            letter-spacing:0.2px;
+        }
+        .logo{
+            width:44px;height:44px;border-radius:10px;
+            background:linear-gradient(135deg,var(--accent),#6bd1ff);
+            display:flex;align-items:center;justify-content:center;font-weight:700;color:#02233a;
+            box-shadow:0 6px 18px rgba(47,156,255,0.12), inset 0 -4px 8px rgba(255,255,255,0.06);
+            font-family:monospace;
+        }
+        nav{display:flex;align-items:center;gap:20px}
+        nav a{
+            color:var(--muted);
+            text-decoration:none;
+            font-weight:600;
+            font-size:14px;
+            padding:8px 10px;
+            border-radius:8px;
+        }
+        nav a:hover{color:#fff;background:var(--glass)}
+        .cta{
+            background:linear-gradient(90deg,var(--accent),#6bd1ff);
+            color:#042033;padding:8px 12px;border-radius:10px;font-weight:700;
+            box-shadow:0 6px 18px rgba(47,156,255,0.12);
+        }
+
+        /* Mobile nav */
+        .hamburger{display:none;cursor:pointer;width:44px;height:44px;border-radius:8px;align-items:center;justify-content:center}
+        .hamburger .bar{width:22px;height:2px;background:var(--muted);margin:3px 0;border-radius:2px;transition:all .25s}
+        @media (max-width:880px){
+            nav{position:fixed;top:72px;right:0;left:0;background:linear-gradient(180deg, rgba(11,18,32,0.98), rgba(11,18,32,0.98));flex-direction:column;padding:14px;display:none}
+            nav.show{display:flex}
+            .hamburger{display:flex}
+            nav a{width:100%;padding:12px 14px}
+            .cta{width:90%;text-align:center}
+            body{padding-top:72px}
+        }
+
+        /* Layout container */
+        .container{
+            max-width:1100px;margin:32px auto;padding:24px;
+        }
+        section{margin:48px 0;padding:28px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.012));border-radius:14px;border:1px solid rgba(255,255,255,0.02)}
+        h1,h2{margin:0 0 12px 0}
+        h1{font-size:26px}
+        h2{font-size:20px;color:#dff0ff}
+        p{color:var(--muted);margin:0 0 12px 0}
+
+        /* About with 3D robot */
+        .about{
+            display:grid;
+            grid-template-columns: 1fr 320px;
+            gap:28px;
+            align-items:center;
+        }
+        @media (max-width:880px){ .about{grid-template-columns:1fr} }
+        .about-text{padding-right:10px}
+        .role{color:var(--accent);font-weight:700;margin-bottom:10px}
+        .robot-stage{
+            width:100%;height:320px;display:flex;align-items:center;justify-content:center;
+            perspective:1000px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.0));
+            border-radius:12px;padding:18px;
+        }
+
+        /* Robot parts (CSS 3D) */
+        .robot{
+            width:200px;height:220px;transform-style:preserve-3d;transition:transform .12s ease-out;
+            transform:rotateX(8deg);
+            position:relative;
+        }
+        .robot .torso{
+            width:160px;height:120px;background:linear-gradient(180deg,#0b2436,#092033);
+            border-radius:12px;padding:12px;margin:auto;box-shadow:0 10px 30px rgba(2,35,52,0.6), inset 0 -6px 14px rgba(255,255,255,0.03);
+            transform:translateZ(-10px);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;
+            position:relative;
+        }
+        .robot .neck{width:40px;height:10px;background:#0b2636;border-radius:4px;margin:8px auto 0;transform:translateZ(20px)}
+        .head{
+            width:120px;height:90px;border-radius:12px;background:linear-gradient(180deg,#0d2b3f,#07202f);
+            margin:auto;display:flex;align-items:center;justify-content:center;position:relative;transform-origin:center bottom;
+            box-shadow:0 8px 20px rgba(2,35,52,0.6);
+        }
+        .antenna{
+            position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:6px;height:18px;background:#6bd1ff;border-radius:6px;
+            box-shadow:0 6px 14px rgba(107,209,255,0.12);
+        }
+        .eyes{display:flex;gap:18px}
+        .eye{
+            width:28px;height:28px;border-radius:50%;background:linear-gradient(180deg,#fff,#cbe9ff);
+            display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:inset 0 -6px 12px rgba(0,0,0,0.25);
+        }
+        .pupil{
+            width:12px;height:12px;border-radius:50%;background:#02233a;transition:transform .06s linear;
+        }
+        .mouth{
+            width:60px;height:6px;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            margin-top:8px;border-radius:6px;opacity:0.9;
+        }
+
+        /* Skills */
+        .skills{display:flex;flex-wrap:wrap;gap:12px}
+        .skill{background:var(--card);padding:10px 12px;border-radius:10px;color:var(--muted);font-weight:700;font-size:13px}
+
+        /* Experience timeline */
+        .timeline{position:relative;padding-left:18px;border-left:2px solid rgba(255,255,255,0.03)}
+        .timeline-item{position:relative;margin:18px 0;padding-left:18px}
+        .timeline-item::before{
+            content:'';position:absolute;left:-11px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 4px 12px rgba(47,156,255,0.12)
+        }
+        .period{font-weight:700;color:#cbeeff;font-size:13px}
+
+        /* Education */
+        .education{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        @media (max-width:880px){ .education{grid-template-columns:1fr} }
+
+        /* Contact form */
+        .contact-wrap{display:grid;grid-template-columns:1fr 1fr;border-radius:12px;overflow:hidden}
+        @media (max-width:880px){ .contact-wrap{grid-template-columns:1fr} }
+        .form-panel{padding:20px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02))}
+        .side-panel{
+            background:
+                radial-gradient(circle at 10% 20%, rgba(107,209,255,0.08), transparent 6%),
+                radial-gradient(circle at 80% 80%, rgba(47,156,255,0.06), transparent 8%),
+                linear-gradient(180deg,#071827 0%,#092433 100%);
+            padding:20px;color:var(--muted);display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;
+        }
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+        @media (max-width:880px){ .form-grid{grid-template-columns:1fr} }
+        label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
+        input,textarea,select{
+            width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);
+            background:rgba(255,255,255,0.02);color:#eaf6ff;font-size:14px;resize:vertical;
+        }
+        textarea{min-height:120px}
+        .form-actions{display:flex;gap:12px;align-items:center;margin-top:12px}
+        .btn{
+            background:var(--accent);color:#042033;padding:10px 14px;border-radius:10px;font-weight:800;border:none;cursor:pointer;
+            box-shadow:0 8px 24px rgba(47,156,255,0.12);
+        }
+        .btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+        .note{font-size:13px;color:var(--muted)}
+
+        /* Footer */
+        footer{padding:18px;text-align:center;color:var(--muted);font-size:13px;margin-top:28px}
+        .social{display:flex;gap:12px;justify-content:center;margin-top:8px}
+        .social a{color:var(--muted);text-decoration:none;padding:8px;border-radius:8px}
+        .social a:hover{color:#fff;background:var(--glass)}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand" aria-label="Brand">
+            <div class="logo">NP</div>
+            <div>
+                <div style="font-size:15px">Nikhil Prasad</div>
+                <div style="font-size:12px;color:var(--muted)">Frontend Engineer</div>
+            </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px">
+            <nav id="nav">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#contact" class="cta">Contact</a>
+            </nav>
+            <button class="hamburger" id="hambtn" aria-label="Toggle menu">
+                <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container" role="main">
+        <section id="about" aria-labelledby="about-title">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:24px;flex-direction:column">
+                <div style="width:100%">
+                    <h2 id="about-title">About</h2>
+                    <div class="about">
+                        <div class="about-text">
+                            <div class="role">Senior Frontend Engineer • UI & Interaction</div>
+                            <h1>Design-driven developer building performant web experiences</h1>
+                            <p>I design and build accessible, high-performance interfaces with a focus on delightful interactions and solid architecture. Experienced in modern JavaScript, component systems, and front-end performance optimization.</p>
+                            <p style="margin-top:10px" class="note">Years of experience: 8+ • Open to senior roles and contractor engagements</p>
+                        </div>
+
+                        <div class="robot-stage" aria-hidden="true">
+                            <div class="robot" id="robot">
+                                <div class="head" id="robotHead">
+                                    <div class="antenna"></div>
+                                    <div class="eyes">
+                                        <div class="eye"><div class="pupil" id="p1"></div></div>
+                                        <div class="eye"><div class="pupil" id="p2"></div></div>
+                                    </div>
+                                </div>
+                                <div class="neck"></div>
+                                <div class="torso">
+                                    <div style="display:flex;gap:8px;">
+                                        <div style="width:12px;height:12px;background:#6bd1ff;border-radius:3px"></div>
+                                        <div style="width:12px;height:12px;background:#87c9ff;border-radius:3px"></div>
+                                        <div style="width:12px;height:12px;background:#4aa6ff;border-radius:3px"></div>
+                                    </div>
+                                    <div class="mouth"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" aria-labelledby="skills-title">
+            <h2 id="skills-title">Skills</h2>
+            <div class="skills" aria-hidden="false">
+                <div class="skill">HTML5 • Semantic Markup</div>
+                <div class="skill">CSS3 • Flexbox & Grid</div>
+                <div class="skill">JavaScript (ES6+)</div>
+                <div class="skill">React • Component Architecture</div>
+                <div class="skill">Performance & Accessibility</div>
+                <div class="skill">Design Systems • Figma</div>
+                <div class="skill">Testing • Jest / Cypress</div>
+                <div class="skill">CI/CD • Git</div>
+            </div>
+        </section>
+
+        <section id="experience" aria-labelledby="experience-title">
+            <h2 id="experience-title">Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="period">2021 — Present</div>
+                    <div style="font-weight:700;color:#fff">Senior Frontend Engineer — Acme Corp</div>
+                    <div class="note">Leading UI architecture, performance optimizations, and accessibility initiatives.</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="period">2017 — 2021</div>
+                    <div style="font-weight:700;color:#fff">Frontend Engineer — Pixel Labs</div>
+                    <div class="note">Built component libraries and collaborated closely with design to ship scalable interfaces.</div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="period">2014 — 2017</div>
+                    <div style="font-weight:700;color:#fff">Web Developer — Studio Nine</div>
+                    <div class="note">Full-stack web development with emphasis on responsive UI and client interactions.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" aria-labelledby="education-title">
+            <h2 id="education-title">Education & Certifications</h2>
+            <div class="education">
+                <div style="background:var(--card);padding:14px;border-radius:10px">
+                    <div style="font-weight:700;color:#fff">B.Sc. Computer Science</div>
+                    <div class="note">University of Example — 2010–2014</div>
+                </div>
+                <div style="background:var(--card);padding:14px;border-radius:10px">
+                    <div style="font-weight:700;color:#fff">Certifications</div>
+                    <div class="note">Accessible Web Development • Advanced JavaScript • UX Design Foundations</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" aria-labelledby="contact-title">
+            <h2 id="contact-title">Contact</h2>
+            <div class="contact-wrap" role="form" aria-label="Contact form">
+                <div class="form-panel">
+                    <form id="contactForm">
+                        <div class="form-grid">
+                            <div>
+                                <label for="name">Full name</label>
+                                <input id="name" name="name" type="text" required placeholder="Your full name">
+                            </div>
+                            <div>
+                                <label for="company">Company</label>
+                                <input id="company" name="company" type="text" placeholder="Company name">
+                            </div>
+                        </div>
+
+                        <div style="margin-top:12px">
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="email" required placeholder="you@company.com">
+                        </div>
+
+                        <div style="margin-top:12px">
+                            <label for="subject">Subject</label>
+                            <input id="subject" name="subject" type="text" placeholder="Interview request, inquiry...">
+                        </div>
+
+                        <div style="margin-top:12px">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell me about the role or inquiry..." required></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn">Send inquiry</button>
+                            <button type="reset" class="btn secondary">Reset</button>
+                            <div style="flex:1"></div>
+                            <div class="note">This form uses mailto: for demonstration. Ready for backend integration.</div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="side-panel">
+                    <div style="font-weight:700;color:#dff8ff">Let's talk</div>
+                    <div class="note">Interested in hiring? Send a brief message and availability. I'll reply within 48 hours.</div>
+                    <div style="width:100%;height:160px;background:linear-gradient(135deg, rgba(107,209,255,0.06), rgba(47,156,255,0.03));border-radius:8px;display:flex;align-items:center;justify-content:center">
+                        <svg width="120" height="120" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M2 7.5C2 6.11929 3.11929 5 4.5 5H19.5C20.8807 5 22 6.11929 22 7.5V16.5C22 17.8807 20.8807 19 19.5 19H4.5C3.11929 19 2 17.8807 2 16.5V7.5Z" stroke="#6bd1ff" stroke-width="1.2"/>
+                            <path d="M3 7L12 13L21 7" stroke="#87c9ff" stroke-width="1.2"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div>© <span id="year"></span> Nikhil Prasad • All rights reserved</div>
+            <div class="social" aria-hidden="true">
+                <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                <a href="#" aria-label="GitHub">GitHub</a>
+                <a href="#" aria-label="Twitter">Twitter</a>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        // Header mobile toggle
+        const hambtn = document.getElementById('hambtn');
+        const nav = document.getElementById('nav');
+        hambtn.addEventListener('click', ()=> nav.classList.toggle('show'));
+
+        // Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Contact form: build mailto on submit
+        const form = document.getElementById('contactForm');
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+            const data = new FormData(form);
+            const name = encodeURIComponent(data.get('name') || '');
+            const company = encodeURIComponent(data.get('company') || '');
+            const email = encodeURIComponent(data.get('email') || '');
+            const subject = encodeURIComponent(data.get('subject') || 'Inquiry');
+            const message = encodeURIComponent(data.get('message') || '');
+            const body = encodeURIComponent(`Name: ${decodeURIComponent(name)}%0D%0ACompany: ${decodeURIComponent(company)}%0D%0AEmail: ${decodeURIComponent(email)}%0D%0A%0D%0A${decodeURIComponent(message)}`);
+            // Replace the email below with your target address
+            const to = 'youremail@example.com';
+            const mailto = `mailto:${to}?subject=${subject}&body=${body}`;
+            window.location.href = mailto;
+        });
+
+        // 3D Robot interaction - eyes follow cursor within about stage
+        (function(){
+            const stage = document.querySelector('.robot-stage');
+            const head = document.getElementById('robotHead');
+            const p1 = document.getElementById('p1');
+            const p2 = document.getElementById('p2');
+            function onMove(e){
+                const rect = stage.getBoundingClientRect();
+                const x = (e.clientX ?? (e.touches && e.touches[0].clientX)) - rect.left;
+                const y = (e.clientY ?? (e.touches && e.touches[0].clientY)) - rect.top;
+                const cx = rect.width/2, cy = rect.height/2;
+                const dx = (x - cx) / cx; // -1..1
+                const dy = (y - cy) / cy;
+                // head rotation (subtle)
+                const rx = Math.max(Math.min(dy*8, 12), -12);
+                const ry = Math.max(Math.min(-dx*8, 12), -12);
+                head.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+                // pupils movement confined
+                const max = 6;
+                const px = Math.max(Math.min(dx*max, max), -max);
+                const py = Math.max(Math.min(dy*max, max), -max);
+                p1.style.transform = `translate(${px}px,${py}px)`;
+                p2.style.transform = `translate(${px}px,${py}px)`;
+            }
+            // Mouse move
+            stage.addEventListener('mousemove', onMove);
+            stage.addEventListener('touchmove', onMove, {passive:true});
+            // Reset on leave
+            stage.addEventListener('mouseleave', ()=> {
+                head.style.transform = `rotateX(8deg)`;
+                p1.style.transform = `translate(0px,0px)`;
+                p2.style.transform = `translate(0px,0px)`;
+            });
+        })();
+    </script>
+</body>
+</html>

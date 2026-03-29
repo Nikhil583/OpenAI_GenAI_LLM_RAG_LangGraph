@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional portfolio showcasing skills, experience, and expertise in software development.">
+    <title>Professional Portfolio</title>
+    <style>
+        /* CSS Custom Properties & Color Palette */
+        :root {
+            --primary-bg: #0f172a;
+            --secondary-bg: #1e293b;
+            --accent-color: #3b82f6;
+            --accent-light: #60a5fa;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border-color: #334155;
+            --success-color: #10b981;
+            --spacing-unit: 1rem;
+            --transition: all 0.3s ease;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: var(--spacing-unit) var(--spacing-unit);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        nav a:hover, nav a:focus {
+            color: var(--accent-light);
+            outline: none;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--accent-light);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+        }
+
+        section {
+            padding: calc(var(--spacing-unit) * 4) var(--spacing-unit);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1, h2, h3 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-unit);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            position: relative;
+            padding-bottom: var(--spacing-unit);
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--accent-light));
+            border-radius: 2px;
+        }
+
+        /* Hero & About Section */
+        #about {
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--primary-bg) 100%);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: calc(var(--spacing-unit) * 3);
+            align-items: center;
+        }
+
+        .about-content h1 {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-unit);
+            background: linear-gradient(135deg, var(--accent-light), var(--text-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-unit);
+            line-height: 1.8;
+        }
+
+        /* Robot Illustration (SVG & CSS) */
+        .robot-container {
+            perspective: 1000px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .robot {
+            position: relative;
+            width: 200px;
+            height: 280px;
+            animation: robotFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes robotFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .robot-head {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 140px;
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+            border-radius: 15px;
+            border: 3px solid var(--accent-light);
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.3);
+        }
+
+        .robot-eyes {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .robot-eye {
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .robot-pupil {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #000;
+            border-radius: 50%;
+            top: 5px;
+            left: 5px;
+            transition: all 0.1s ease;
+        }
+
+        .robot-mouth {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .robot-body {
+            position: absolute;
+            top: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            border-radius: 8px;
+            border: 2px solid var(--accent-light);
+        }
+
+        /* Skills Section */
+        #skills {
+            background-color: var(--primary-bg);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, var(--secondary-bg), rgba(59, 130, 246, 0.1));
+            border: 1px solid var(--border-color);
+            padding: calc(var(--spacing-unit) * 1.5);
+            border-radius: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-light);
+            box-shadow: 0 10px 30px rgba(96, 165, 250, 0.2);
+        }
+
+        .skill-card h3 {
+            color: var(--accent-light);
+            margin-bottom: var(--spacing-unit);
+            font-size: 1.2rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-light);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid var(--accent-color);
+            transition: var(--transition);
+        }
+
+        .skill-tag:hover {
+            background: var(--accent-color);
+            color: var(--primary-bg);
+        }
+
+        /* Experience Timeline */
+        #experience {
+            background-color: var(--secondary-bg);
+        }
+
+        .timeline {
+            position: relative;
+            padding: calc(var(--spacing-unit) * 2) 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent-color), var(--accent-light));
+        }
+
+        .timeline-item {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            padding-left: 100px;
+            position: relative;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            width: 45px;
+            height: 45px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            border: 3px solid var(--primary-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .timeline-date {
+            color: var(--accent-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-company {
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .timeline-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Education Section */
+        #education {
+            background-color: var(--primary-bg);
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .education-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), var(--secondary-bg));
+            border-left: 4px solid var(--accent-light);
+            padding: calc(var(--spacing-unit) * 1.5);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .education-card:hover {
+            transform: translateX(5px);
+        }
+
+        .education-degree {
+            color: var(--accent-light);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-institution {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        #contact {
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, rgba(59, 130, 246, 0.05) 100%);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: calc(var(--spacing-unit) * 3);
+            align-items: center;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: var(--spacing-unit);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: rgba(30, 41, 59, 0.8);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: var(--spacing-unit);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-light);
+            background: rgba(30, 41, 59, 1);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-unit);
+        }
+
+        .form-submit {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+            color: white;
+            border: none;
+            padding: calc(var(--spacing-unit) * 0.75) var(--spacing-unit);
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: var(--spacing-unit);
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(96, 165, 250, 0.3);
+        }
+
+        .form-submit:focus {
+            outline: 2px solid var(--accent-light);
+            outline-offset: 2px;
+        }
+
+        .contact-visual {
+            background: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, var(--accent-color) 100%);
+            border-radius: 15px;
+            padding: calc(var(--spacing-unit) * 3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 350px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-visual::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -50%;
+            right: -50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .contact-visual::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            bottom: -30%;
+            left: -30%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .contact-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+        }
+
+        .contact-content h3 {
+            color: white;
+            margin-bottom: var(--spacing-unit);
+            font-size: 1.5rem;
+        }
+
+        .contact-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-bg);
+            border-top: 1px solid var(--border-color);
+            padding: calc(var(--spacing-unit) * 3) var(--spacing-unit);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: calc(var(--spacing-unit) * 2);
+            margin-bottom: var(--spacing-unit);
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-light);
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            #about {
+                grid-template-columns: 1fr;
+            }
+
+            .about-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--secondary-bg);
+                padding: var(--spacing-unit);
+                gap: 1rem;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(45deg) translateY(10px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(-45deg) translateY(-10px);
+            }
+
+            main {
+                margin-top: 120px;
+            }
+
+            section {
+                padding: calc(var(--spacing-unit) * 2) var(--spacing-unit);
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            .about-content h1 {
+                font-size: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 15px;
+            }
+
+            .timeline-item {
+                padding-left: 70px;
+            }
+
+            .timeline-dot {
+                width: 35px;
+                height: 35px;
+                left: 0;
+                font-size: 0.8rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .education-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .about-content h1 {
+                font-size: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h2::after {
+                width: 60px;
+            }
+
+            section {
+                padding: calc(var(--spacing-unit) * 1.5) var(--spacing-unit);
+            }
+
+            .robot-container {
+                height: 300px;
+            }
+
+            .robot {
+                width: 150px;
+                height: 210px;
+            }
+
+            nav ul {
+                gap: 0.5rem;
+            }
+
+            nav a {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="header-container">
+            <a href="#home" class="logo">NikhiDev</a>
+            <nav>
+                <ul id="navMenu">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#education">Education</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- About Section -->
+        <section id="about">
+            <div class="about-content">
+                <h1>Nikhi Patel</h1>
+                <p style="color: var(--accent-light); font-size: 1.3rem; margin-bottom: calc(var(--spacing-unit) * 1.5);">Full Stack Developer & AI Enthusiast</p>
+                <p>I craft elegant, scalable web solutions with modern technologies. Passionate about clean code, user experience, and solving complex problems. Currently based in San Francisco, available for remote and on-site opportunities.</p>
+                <p style="margin-top: var(--spacing-unit);">
+                    <span style="color: var(--accent-light); font-weight: 600;">Skills:</span> React, Node.js, TypeScript, Python, AWS, Machine Learning
+                </p>
+            </div>
+            <div class="robot-container">
+                <div class="robot">
+                    <div class="robot-head">
+                        <div class="robot-eyes">
+                            <div class="robot-eye">
+                                <div class="robot-pupil" id="pupil1"></div>
+                            </div>
+                            <div class="robot-eye">
+                                <div class="robot-pupil" id="pupil2"></div>
+                            </div>
+                        </div>
+                        <div class="robot-mouth"></div>
+                    </div>
+                    <div class="robot-body"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Frontend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Vue.js</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">CSS3</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <h3>Backend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">REST APIs</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <h3>Tools & Platforms</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">CI/CD</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience">
+            <h2>Work Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">1</div>
+                    <div class="timeline-date">2022 - Present</div>
+                    <div class="timeline-title">Senior Full Stack Developer</div>
+                    <div class="timeline-company">TechCorp Solutions</div>
+                    <div class="timeline-description">Lead development of cloud-based SaaS platform serving 50k+ users. Architected microservices using Node.js and Python. Improved system performance by 40% through optimization.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">2</div>
+                    <div class="timeline-date">2020 - 2022</div>
+                    <div class="timeline-title">Full Stack Developer</div>
+                    <div class="timeline-company">WebWorks Inc</div>
+                    <div class="timeline-description">Built responsive web applications using React and Vue.js. Collaborated with cross-functional teams on feature development and bug fixes. Mentored junior developers.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">3</div>
+                    <div class="timeline-date">2018 - 2020</div>
+                    <div class="timeline-title">Junior Developer</div>
+                    <div class="timeline-company">StartupHub</div>
+                    <div class="timeline-description">Developed and maintained web applications. Implemented UI designs in HTML/CSS/JavaScript. Learned agile methodologies and Git workflows.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education">
+            <h2>Education</h2>
+            <div class="education-grid">
+                <div class="education-card">
+                    <div class="education-degree">B.S. Computer Science</div>
+                    <div class="education-institution">University of California, Berkeley</div>
+                    <div class="education-date">Graduated: May 2018</div>
+                </div>
+                <div class="education-card">
+                    <div class="education-degree">AWS Certified Solutions Architect</div>
+                    <div class="education-institution">Amazon Web Services</div>
+                    <div class="education-date">Certified: March 2022</div>
+                </div>
+                <div class="education-card">
+                    <div class="education-degree">Machine Learning Specialization</div>
+                    <div class="education-institution">Coursera / Stanford University</div>
+                    <div class="education-date">Completed: November 2023</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Get In Touch</h2>
+            <div class="contact-container">
+                <form class="contact-form" name="contact" method="POST" action="mailto:nikhi@example.com?subject=Portfolio%20Inquiry">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(59, 130, 246, 0.1)); border: 2px solid var(--border-color);">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 41, 59, 0.8)); border: 2px solid var(--border-color);">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company (Optional)</label>
+                        <input type="text" id="company" name="company" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(30, 41, 59, 0.8)); border: 2px solid var(--border-color);">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(99, 102, 241, 0.05)); border: 2px solid var(--border-color);">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" required style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(30, 41, 59, 0.9)); border: 2px solid var(--border-color);"></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Send Message</button>
+                </form>
+                <div class="contact-visual">
+                    <div class="contact-content">
+                        <h3>Let's Connect</h3>
+                        <p>I'm always interested in hearing about new projects and opportunities. Feel free to reach out!</p>
+                        <p style="margin-top: calc(var(--spacing-unit) * 2); font-size: 1rem;">
+                            📧 nikhi@example.com<br>
+                            🔗 linkedin.com/in/nikhipatel<br>
+                            💼 github.com/nikhipatel
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2024 Nikhi Patel. All rights reserved. | Last updated: January 2024
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Robot Eye Tracking (cursor interaction)
+        document.addEventListener('mousemove', function(e) {
+            const pupil1 = document.getElementById('pupil1');
+            const pupil2 = document.getElementById('pupil2');
+
+            if (pupil1 && pupil2) {
+                const angle = Math.atan2(e.clientY - window.innerHeight / 2, e.clientX - window.innerWidth / 2);
+                const distance = 5;
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+
+                pupil1.style.transform = `translate(${x}px, ${y}px)`;
+                pupil2.style.transform = `translate(${x}px, ${y}px)`;
+            }
+        });
+
+        // Form submission handler for mailto
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            const company = document.getElementById('company').value;
+
+            const body = `Name: ${name}\nEmail: ${email}\nCompany: ${company}\n\nMessage:\n${message}`;
+            const mailtoLink = `mailto:nikhi@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+            window.location.href = mailtoLink;
+        });
+    </script>
+</body>
+</html>
